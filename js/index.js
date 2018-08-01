@@ -27,7 +27,13 @@ function showLogin() {
       }
       spot.eq(num).addClass('choosed');
 }
-setInterval(showLogin,2000);
+var t = setInterval(showLogin,3000);
+$('.center-right').on('mouseover',function(){
+  clearInterval(t);
+})
+$('.center-right').on('mouseout',function(){
+  var t = setInterval(showLogin,3000);
+})
     $('.banner-point').click(function () {
       if (swite) {
         swite = false;

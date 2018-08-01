@@ -169,10 +169,12 @@
 
 .left-boot-line .left-boot-line-tit {
   display: inline-block;
-  height: 35px;
-  width: 300px;
+  line-height: 100%;
+  width: 74%;
   padding-left: 11px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 16px;
   color: #333;
 }
@@ -352,6 +354,9 @@ content: "";
   background: #005389;
   transition: all 0.4s;  
   color: white;
+}
+.boot-box:hover .boot-right-content {
+  color: #fff;
 }
 .shadow-box {
 position: fixed;
