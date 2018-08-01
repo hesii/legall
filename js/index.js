@@ -11,6 +11,13 @@ $(function () {
   }
   as.eq(i).css({left:width});
   }
+var t = setInterval(showLogin,3000);
+$('.center-right').on('mouseover',function(){
+  clearInterval(t);
+});
+$('.center-right').on('mouseout',function(){
+  t= setInterval(showLogin,3000);
+});
 function showLogin() {
       next++;
       if (next === as.length) {
@@ -27,13 +34,7 @@ function showLogin() {
       }
       spot.eq(num).addClass('choosed');
 }
-var t = setInterval(showLogin,3000);
-$('.center-right').on('mouseover',function(){
-  clearInterval(t);
-})
-$('.center-right').on('mouseout',function(){
-  var t = setInterval(showLogin,3000);
-})
+
     $('.banner-point').click(function () {
       if (swite) {
         swite = false;
@@ -114,83 +115,94 @@ $(function(){
               list2.append(caros);
       }
 //关闭按钮
-      $('.close').on('click',function() {
+        $('.close').on('click',function() {
         $('.shadow-box').addClass('hidden');
         $('.caro').removeClass('border');//给下面滑动窗口去掉边框
       })
       var bannul = $('.caro-pics');//滑动框的ul
       var bannli = $('.caro');//滑动框的li
-      var bannindex = 0;
       var dbSwite = true;
-
+      //点击图片事件
       $('.boot-boxs').find('.boot-box').on('click',function() {
+        bannindex = 0;
         $('.shadow-box').removeClass('hidden');
         var src = $(this).data('src');//获取当前图片的url
         var index = $(this).index();//获取当前点击的图片位置
         $('.caro').eq(index).addClass('border');
         $('.card-img').attr('src',$(this).data('src'));
-        $('.card-banner').find('a').text(arr[index].title);        
-//右边切换
-      var right = function() {
-        bannindex++;//点击右边切换按钮之后的定位
-        console.log("right="+bannindex);
-        if(bannindex >= arr.length) {//当点击到最后一个时，重新开始
-          bannindex = 0;
-          leftNum = 0;
+        $('.card-banner').find('a').text(arr[index].title); 
+        var left = parseInt(100*index);
+        if (left > 300) {//点击左右切换按钮之后，当点击到第4个时，将ul向左移动相应宽，之后都向左移动
           dbSwite = false;
-          bannul.animate({left: leftNum}, function () {
+          bannul.animate({left: -left}, function () {
+            nowLeft = left;
             dbSwite = true;
           });
+        } else if (left == 300) {
+          bannul.animate({left: 0}, function () {
+            nowLeft = left;
+            dbSwite = true;
+          });
+        }
+        // console.log(index);
+         bannindex = index;
+        console.log(bannindex);
+
+    });  
+    //右边切换
+    var rightf = function() {
+      bannindex++;//点击右边切换按钮之后的定位
+      console.log('rrr'+bannindex);
+      if(bannindex >= arr.length) {//当点击到最后一个时，重新开始
+        bannindex = 0;
+        leftNum = 0;
+        dbSwite = false;
+        bannul.animate({left: leftNum}, function () {
+          dbSwite = true;
+        });
+    }
+      $('.caro').removeClass('border');
+      $('.caro').eq(bannindex).addClass('border');
+      $('.card-img').attr('src', arr[bannindex].picUrl);
+      $('.card-banner').find('a').text(arr[bannindex].title);
+    };
+//左边切换
+   var leftf = function() {
+      bannindex--;
+      console.log('lll'+bannindex);
+      if(bannindex < 0) {
+        bannindex = arr.length - 1;
       }
       $('.caro').removeClass('border');
       $('.caro').eq(bannindex).addClass('border');
-        $('.card-img').attr('src', arr[bannindex].picUrl);
-        $('.card-banner').find('a').text(arr[bannindex].title);
-        var left = parseInt(100*bannindex);
-        if (left > 200) {//点击左右切换按钮之后，当点击到第4个时，将ul向左移动相应宽，之后都向左移动
-          dbSwite = false;
-          bannul.animate({left: -left}, function () {
-            nowLeft = left;
-            dbSwite = true;
-          });
-        } else if (left === 200) {
-          bannul.animate({left: 0}, function () {
-            nowLeft = left;
-            dbSwite = true;
-          });
-        }
-      };
-//左边切换
-     var left = function() {
-        bannindex--;
-        if(bannindex < 0) {
-          bannindex = arr.length - 1;
-        }
-        $('.caro').removeClass('border');
-        $('.caro').eq(bannindex).addClass('border');
-        $('.card-img').attr('src', arr[bannindex].picUrl);
-        $('.card-banner').find('a').text(arr[bannindex].title);//给显示窗口加上对应图片文字
-        var left = parseInt(100*bannindex);
-        if (left > 200) {//点击左右切换按钮之后，当点击到第4个时，将ul向左移动相应宽，之后都向左移动
-          dbSwite = false;
-          bannul.animate({left: -left}, function () {
-            nowLeft = left;
-            dbSwite = true;
-          });
-        } else if (left === 200) {
-          bannul.animate({left: 0}, function () {
-            nowLeft = left;
-            dbSwite = true;
-          });
-        }
-      };
-      $('.switch').on('click',function() {
-        if(dbSwite){
-          if($(this).data()=='switchl') {left();}
-          else {right();}
-        }
-      })
+      $('.card-img').attr('src', arr[bannindex].picUrl);
+      $('.card-banner').find('a').text(arr[bannindex].title);//给显示窗口加上对应图片文字
+    };
 
+    $('.switch').on('click',function() {
+      if(dbSwite){
+      var id = $(this).attr('id');
+        if(id=='left') {
+          leftf();
+        }else if(id=='right') {
+          rightf();
+        }
+        console.log('此时的定位是：'+bannindex);
+        var left = parseInt(100*bannindex);
+        if (left > 300) {//点击左右切换按钮之后，当点击到第4个时，将ul向左移动相应宽，之后都向左移动
+          dbSwite = false;
+          bannul.animate({left: -left}, function () {
+            nowLeft = left;
+            dbSwite = true;
+          });
+        } else if (left == 300) {
+          bannul.animate({left: 0}, function () {
+            nowLeft = left;
+            dbSwite = true;
+          });
+        }
+      }
+    })
       $('.caro-pics').find('.caro').on('click',function(){
         var src = $(this).data('src');
         var index = $(this).index();
@@ -213,8 +225,7 @@ $(function(){
           }); 
         }
       });     
-  });
+
 }
   pic(listArr);
 });
-
