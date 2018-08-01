@@ -13,8 +13,9 @@ body,html,div,dl,dt,dd,ul,li,ol,p {
     background-repeat: no-repeat;
   }
   
-  ol,ul,li {
+  ol,ul,li,button,select {
     list-style: none;
+    outline: none;
   }
   a {
     display: block;

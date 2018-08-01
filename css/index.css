@@ -144,6 +144,7 @@
 .tit {
   float: left;
   display: block;
+  width: 64px;
   color: #333;
   font-size: 16px;
 }
@@ -170,7 +171,7 @@
   display: inline-block;
   height: 35px;
   width: 300px;
-  padding-left: 7px;
+  padding-left: 11px;
   overflow: hidden;
   font-size: 16px;
   color: #333;
@@ -225,17 +226,25 @@
 .refresh-time {
   display: inline;
 }
+.refresh-time select {
+  width: 70px;
+  height: 22px;
+  cursor: pointer;
+}
 .refresh-btns {
   padding-left: 20px;
   display: inline-block;
 }
 .refresh-btn {
   width: 70px;
+  height: 22px;
   line-height: auto;
   display: inline;
   background-color: #fff;
   border: 1px solid #aaaaaa;
   text-align: center;
+  cursor: pointer;
+
 }
 .refresh-btn-choose {
   background: #005389;
