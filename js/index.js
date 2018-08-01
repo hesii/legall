@@ -125,7 +125,7 @@ $(function(){
         $('.card-img').attr('src',$(this).data('src'));
         $('.card-banner').find('a').text(arr[index].title);        
 //右边切换
-      $('.switchr').on('click',function() {
+      var right = function() {
         bannindex++;//点击右边切换按钮之后的定位
         console.log("right="+bannindex);
         if(bannindex >= arr.length) {//当点击到最后一个时，重新开始
@@ -153,9 +153,9 @@ $(function(){
             dbSwite = true;
           });
         }
-      });
+      };
 //左边切换
-      $('.switchl').on('click',function() {
+     var left = function() {
         bannindex--;
         if(bannindex < 0) {
           bannindex = arr.length - 1;
@@ -177,7 +177,14 @@ $(function(){
             dbSwite = true;
           });
         }
-      });
+      };
+      $('.switch').on('click',function() {
+        if(dbSwite){
+          if($(this).data()=='switchl') {left();}
+          else {right();}
+        }
+      })
+
       $('.caro-pics').find('.caro').on('click',function(){
         var src = $(this).data('src');
         var index = $(this).index();
